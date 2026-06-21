@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 // ── Animated Sakura Petals ──
@@ -18,40 +18,32 @@ function SakuraPetals() {
 function SakuraTreeLeft() {
   return (
     <svg className="sakura-tree-left" width="220" height="400" viewBox="0 0 220 400">
-      {/* Trunk */}
       <rect x="100" y="280" width="18" height="120" fill="#4a1838" />
       <rect x="95" y="350" width="28" height="12" fill="#4a1838" />
       <rect x="88" y="360" width="42" height="8" fill="#4a1838" />
-      {/* Branches */}
       <rect x="60" y="260" width="58" height="6" fill="#4a1838" rx="3" />
       <rect x="40" y="240" width="45" height="5" fill="#4a1838" rx="2" />
       <rect x="110" y="250" width="50" height="5" fill="#4a1838" rx="2" />
       <rect x="120" y="230" width="35" height="4" fill="#4a1838" rx="2" />
-      {/* Sakura blossoms - pixel clusters */}
-      {/* Top cluster */}
       <rect x="80" y="180" width="12" height="12" fill="#ff8fa3" rx="2" />
       <rect x="96" y="175" width="14" height="14" fill="#ffb3c6" rx="2" />
       <rect x="114" y="180" width="10" height="10" fill="#ff8fa3" rx="2" />
       <rect x="88" y="165" width="16" height="16" fill="#c94068" rx="2" />
       <rect x="106" y="168" width="12" height="12" fill="#ffb3c6" rx="2" />
-      {/* Middle cluster */}
       <rect x="55" y="210" width="14" height="14" fill="#ffb3c6" rx="2" />
       <rect x="72" y="205" width="12" height="12" fill="#ff8fa3" rx="2" />
       <rect x="48" y="225" width="10" height="10" fill="#c94068" rx="2" />
       <rect x="62" y="222" width="14" height="14" fill="#ff8fa3" rx="2" />
       <rect x="80" y="215" width="10" height="10" fill="#ffb3c6" rx="2" />
-      {/* Right cluster */}
       <rect x="125" y="200" width="12" height="12" fill="#ffb3c6" rx="2" />
       <rect x="140" y="195" width="14" height="14" fill="#ff8fa3" rx="2" />
       <rect x="155" y="205" width="10" height="10" fill="#c94068" rx="2" />
       <rect x="130" y="215" width="10" height="10" fill="#c94068" rx="2" />
       <rect x="142" y="210" width="12" height="12" fill="#ffb3c6" rx="2" />
-      {/* Scattered petals */}
       <rect x="42" y="195" width="8" height="8" fill="#ff8fa3" rx="1" />
       <rect x="165" y="185" width="8" height="8" fill="#ffb3c6" rx="1" />
       <rect x="95" y="155" width="6" height="6" fill="#ffb3c6" rx="1" />
       <rect x="118" y="160" width="7" height="7" fill="#c94068" rx="1" />
-      {/* Falling petals */}
       <rect x="35" y="280" width="5" height="5" fill="#ff8fa3" rx="1" opacity="0.6">
         <animateTransform attributeName="transform" type="translate" values="0,0; 15,40; 5,80" dur="4s" repeatCount="indefinite" />
       </rect>
@@ -69,26 +61,21 @@ function SakuraTreeLeft() {
 function SakuraTreeRight() {
   return (
     <svg className="sakura-tree-right" width="160" height="320" viewBox="0 0 160 320">
-      {/* Trunk */}
       <rect x="70" y="220" width="14" height="100" fill="#4a1838" />
       <rect x="65" y="290" width="24" height="10" fill="#4a1838" />
-      {/* Branches */}
       <rect x="45" y="210" width="38" height="5" fill="#4a1838" rx="2" />
       <rect x="80" y="200" width="35" height="4" fill="#4a1838" rx="2" />
       <rect x="35" y="195" width="30" height="4" fill="#4a1838" rx="2" />
-      {/* Blossoms */}
       <rect x="30" y="160" width="12" height="12" fill="#ffb3c6" rx="2" />
       <rect x="46" y="155" width="14" height="14" fill="#ff8fa3" rx="2" />
       <rect x="62" y="158" width="10" height="10" fill="#c94068" rx="2" />
       <rect x="38" y="145" width="10" height="10" fill="#ff8fa3" rx="2" />
       <rect x="55" y="142" width="12" height="12" fill="#ffb3c6" rx="2" />
       <rect x="75" y="150" width="8" height="8" fill="#ff8fa3" rx="1" />
-      {/* Right cluster */}
       <rect x="85" y="170" width="10" height="10" fill="#ffb3c6" rx="2" />
       <rect x="98" y="165" width="12" height="12" fill="#c94068" rx="2" />
       <rect x="112" y="172" width="8" height="8" fill="#ff8fa3" rx="1" />
       <rect x="90" y="155" width="8" height="8" fill="#ffb3c6" rx="1" />
-      {/* Falling petals */}
       <rect x="25" y="200" width="4" height="4" fill="#ffb3c6" rx="1" opacity="0.6">
         <animateTransform attributeName="transform" type="translate" values="0,0; 10,35; -5,70" dur="4.5s" repeatCount="indefinite" />
       </rect>
@@ -99,16 +86,36 @@ function SakuraTreeRight() {
   );
 }
 
+// ── Helper: open native file picker ──
+function openFilePicker(onFiles) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.multiple = true;
+  input.accept = '.png,image/png';
+  input.style.display = 'none';
+  document.body.appendChild(input);
+  input.addEventListener('change', () => {
+    const files = Array.from(input.files || []);
+    document.body.removeChild(input);
+    if (files.length > 0) onFiles(files);
+  });
+  // Cleanup on cancel (no change event fires)
+  input.addEventListener('blur', () => {
+    setTimeout(() => { if (document.body.contains(input)) document.body.removeChild(input); }, 300);
+  });
+  input.click();
+}
+
 // ── Main Editor ──
 export default function Editor() {
   const router = useRouter();
   const params = useParams();
   const collectionId = params.id;
-  
+
   const [collection, setCollection] = useState(null);
   const [layers, setLayers] = useState([]);
-  const [selectedLayer, setSelectedLayer] = useState(null);
-  const [selectedTrait, setSelectedTrait] = useState(null);
+  const [selectedLayerId, setSelectedLayerId] = useState(null);
+  const [selectedTraitId, setSelectedTraitId] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [generating, setGenerating] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -117,7 +124,10 @@ export default function Editor() {
   const [newLayerName, setNewLayerName] = useState('');
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
-  const fileInputRef = useRef(null);
+
+  // Derive selected objects
+  const selectedLayer = layers.find(l => l.id === selectedLayerId) || null;
+  const selectedTrait = selectedLayer ? selectedLayer.traits.find(t => t.id === selectedTraitId) || null : null;
 
   const fetchCollection = useCallback(async () => {
     try {
@@ -129,56 +139,53 @@ export default function Editor() {
   const fetchLayers = useCallback(async () => {
     try {
       const res = await fetch(`/api/collections/${collectionId}/layers`);
-      if (res.ok) {
-        const data = await res.json();
-        setLayers(data);
-        if (selectedLayer) {
-          const updated = data.find(l => l.id === selectedLayer.id);
-          if (updated) {
-            setSelectedLayer(updated);
-            if (selectedTrait) {
-              const ut = updated.traits.find(t => t.id === selectedTrait.id);
-              if (ut) setSelectedTrait(ut);
-            }
-          }
-        }
-      }
+      if (res.ok) setLayers(await res.json());
     } catch (e) { console.error(e); }
-  }, [collectionId, selectedLayer, selectedTrait]);
+  }, [collectionId]);
 
   useEffect(() => { fetchCollection(); fetchLayers(); }, [fetchCollection, fetchLayers]);
 
   // ── Layer Management ──
   const addLayer = async () => {
     if (!newLayerName.trim()) return;
+    const name = newLayerName.trim();
+    setNewLayerName('');
+    const tempId = -Date.now();
+    const newLayer = { id: tempId, name, sort_order: layers.length, enabled: true, traits: [] };
+    setLayers(prev => [...prev, newLayer]);
     try {
       const res = await fetch(`/api/collections/${collectionId}/layers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newLayerName.trim() }),
+        body: JSON.stringify({ name }),
       });
-      if (res.ok) { setNewLayerName(''); fetchLayers(); }
-    } catch (e) { alert(e.message); }
+      if (res.ok) { fetchLayers(); } else {
+        const data = await res.json();
+        alert(data.error || 'Failed');
+        fetchLayers();
+      }
+    } catch (e) { alert(e.message); fetchLayers(); }
   };
 
   const deleteLayer = async (layerId) => {
     if (!confirm('Delete this layer and all its traits?')) return;
+    setLayers(prev => prev.filter(l => l.id !== layerId));
+    if (selectedLayerId === layerId) { setSelectedLayerId(null); setSelectedTraitId(null); }
     try {
       await fetch(`/api/collections/${collectionId}/layers/${layerId}`, { method: 'DELETE' });
-      if (selectedLayer?.id === layerId) { setSelectedLayer(null); setSelectedTrait(null); }
       fetchLayers();
-    } catch (e) { alert(e.message); }
+    } catch (e) { alert(e.message); fetchLayers(); }
   };
 
   const toggleLayer = async (layerId, enabled) => {
+    setLayers(prev => prev.map(l => l.id === layerId ? { ...l, enabled: !enabled } : l));
     try {
       await fetch(`/api/collections/${collectionId}/layers/${layerId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ enabled: !enabled }),
       });
-      fetchLayers();
-    } catch (e) { alert(e.message); }
+    } catch (e) { fetchLayers(); }
   };
 
   const moveLayer = async (layerId, direction) => {
@@ -188,6 +195,7 @@ export default function Editor() {
     if (swapIdx < 0 || swapIdx >= layers.length) return;
     const reordered = [...layers];
     [reordered[idx], reordered[swapIdx]] = [reordered[swapIdx], reordered[idx]];
+    setLayers(reordered);
     const updates = reordered.map((l, i) => ({ id: l.id, sort_order: i }));
     try {
       await fetch(`/api/collections/${collectionId}/layers`, {
@@ -195,8 +203,7 @@ export default function Editor() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ layers: updates }),
       });
-      fetchLayers();
-    } catch (e) { alert(e.message); }
+    } catch (e) { fetchLayers(); }
   };
 
   // ── Trait Upload ──
@@ -212,7 +219,7 @@ export default function Editor() {
           count++;
         }
       }
-      if (count === 0) { alert('No PNG files'); setUploading(false); return; }
+      if (count === 0) { alert('No PNG files selected'); setUploading(false); return; }
       formData.append('settings', JSON.stringify({
         display_name: '', category_name: selectedLayer.name,
         rarity_weight: 1, x: 0, y: 0, scale: 1.0, opacity: 1.0, optional: false,
@@ -226,10 +233,8 @@ export default function Editor() {
     setUploading(false);
   };
 
-  const handleFileChange = (e) => {
-    const fileList = e.target.files;
-    if (fileList && fileList.length > 0) uploadTraits(Array.from(fileList));
-    if (fileInputRef.current) fileInputRef.current.value = '';
+  const handlePickFiles = () => {
+    openFilePicker((files) => uploadTraits(files));
   };
 
   const handleDrop = (e) => {
@@ -240,29 +245,31 @@ export default function Editor() {
 
   const deleteTrait = async (traitId) => {
     if (!confirm('Delete this trait?')) return;
+    setLayers(prev => prev.map(l => l.id === selectedLayerId ? { ...l, traits: l.traits.filter(t => t.id !== traitId) } : l));
+    if (selectedTraitId === traitId) setSelectedTraitId(null);
     try {
-      await fetch(`/api/collections/${collectionId}/layers/${selectedLayer.id}/traits/${traitId}`, { method: 'DELETE' });
-      if (selectedTrait?.id === traitId) setSelectedTrait(null);
+      await fetch(`/api/collections/${collectionId}/layers/${selectedLayerId}/traits/${traitId}`, { method: 'DELETE' });
       fetchLayers();
-    } catch (e) { alert(e.message); }
+    } catch (e) { alert(e.message); fetchLayers(); }
   };
 
   const updateTrait = async (traitId, data) => {
+    setLayers(prev => prev.map(l => l.id === selectedLayerId ? {
+      ...l, traits: l.traits.map(t => t.id === traitId ? { ...t, ...data } : t)
+    } : l));
     try {
-      await fetch(`/api/collections/${collectionId}/layers/${selectedLayer.id}/traits/${traitId}`, {
+      await fetch(`/api/collections/${collectionId}/layers/${selectedLayerId}/traits/${traitId}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
       });
-      fetchLayers();
-    } catch (e) { alert(e.message); }
+    } catch (e) { fetchLayers(); }
   };
 
   // ── Cursor Arrow Move ──
-  const moveTraitPosition = async (dx, dy) => {
+  const moveTraitPosition = (dx, dy) => {
     if (!selectedTrait) return;
     const newX = (selectedTrait.x || 0) + dx;
     const newY = (selectedTrait.y || 0) + dy;
-    setSelectedTrait({ ...selectedTrait, x: newX, y: newY });
-    await updateTrait(selectedTrait.id, { x: newX, y: newY });
+    updateTrait(selectedTrait.id, { x: newX, y: newY });
   };
 
   const generatePreview = async () => {
@@ -350,41 +357,118 @@ export default function Editor() {
 
       {/* Main 3-column */}
       <div className="flex flex-1 overflow-hidden relative z-10">
-        {/* Left: Layers */}
-        <div className="w-56 border-r-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm flex flex-col shrink-0">
+        {/* ── Left: Layers ── */}
+        <div className="w-72 border-r-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm flex flex-col shrink-0">
           <div className="p-3 border-b-2 border-[#3a1830]">
             <div className="text-xs text-[#e8758a] mb-2" style={{ fontFamily: "'Press Start 2P', monospace" }}>LAYERS</div>
-            <div className="flex gap-1">
+            <div className="flex gap-2">
               <input type="text" value={newLayerName} onChange={(e) => setNewLayerName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addLayer()}
-                className="flex-1 pixel-input text-xs" placeholder="New..." />
-              <button onClick={addLayer} className="pixel-btn pixel-btn-accent text-xs py-1 px-2">+</button>
+                className="flex-1 pixel-input text-xs" placeholder="New layer..." />
+              <button onClick={addLayer}
+                style={{
+                  background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
+                  color: '#fff',
+                  border: '2px solid #ffb3c6',
+                  borderRadius: '8px',
+                  padding: '6px 14px',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontFamily: "'Press Start 2P', monospace",
+                  boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
+                }}>
+                + ADD
+              </button>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">
             {layers.map((layer) => (
               <div key={layer.id}
-                className={`p-2 border-b border-[#3a1830] cursor-pointer transition-all ${selectedLayer?.id === layer.id ? 'bg-[#c94068]/20 border-l-4 border-l-[#ff8fa3]' : 'hover:bg-[#3a1830]'}`}
-                onClick={() => { setSelectedLayer(layer); setSelectedTrait(null); }}>
-                <div className="flex items-center justify-between">
+                className={`p-2 border-b border-[#3a1830] cursor-pointer transition-all ${selectedLayerId === layer.id ? 'bg-[#c94068]/20 border-l-4 border-l-[#ff8fa3]' : 'hover:bg-[#3a1830]'}`}
+                onClick={() => { setSelectedLayerId(layer.id); setSelectedTraitId(null); }}>
+                <div className="flex items-center justify-between gap-1">
                   <div className="flex items-center gap-1">
-                    <button onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'up'); }} className="text-[#5a2848] hover:text-[#ff8fa3] text-xs">▲</button>
-                    <button onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'down'); }} className="text-[#5a2848] hover:text-[#ff8fa3] text-xs">▼</button>
-                    <span className={`text-xs ${layer.enabled ? 'text-[#ffb3c6]' : 'text-[#5a2848] line-through'}`} style={{ fontFamily: "'Press Start 2P', monospace" }}>{layer.name}</span>
+                    {/* ▲ UP — BIG, BOLD */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'up'); }}
+                      title="Move Up"
+                      style={{
+                        width: '40px', height: '40px',
+                        background: '#c94068',
+                        color: '#fff',
+                        border: '3px solid #ff8fa3',
+                        borderRadius: '8px',
+                        fontSize: '18px', fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
+                        flexShrink: 0,
+                      }}
+                    >▲</button>
+                    {/* ▼ DOWN — BIG, BOLD */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'down'); }}
+                      title="Move Down"
+                      style={{
+                        width: '40px', height: '40px',
+                        background: '#c94068',
+                        color: '#fff',
+                        border: '3px solid #ff8fa3',
+                        borderRadius: '8px',
+                        fontSize: '18px', fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
+                        flexShrink: 0,
+                      }}
+                    >▼</button>
+                    <div className="flex flex-col min-w-0 ml-1">
+                      <span className={`text-xs truncate ${layer.enabled ? 'text-[#ffb3c6]' : 'text-[#5a2848] line-through'}`} style={{ fontFamily: "'Press Start 2P', monospace" }}>{layer.name}</span>
+                      <span className="text-[10px] text-[#7a3860]">{layer.traits.length} traits</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-[#5a2848]">{layer.traits.length}</span>
-                    <button onClick={(e) => { e.stopPropagation(); toggleLayer(layer.id, layer.enabled); }} className={`text-xs ${layer.enabled ? 'text-[#ff8fa3]' : 'text-[#5a2848]'}`}>{layer.enabled ? '●' : '○'}</button>
-                    <button onClick={(e) => { e.stopPropagation(); deleteLayer(layer.id); }} className="text-[#5a2848] hover:text-[#ff4060] text-xs">X</button>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    {/* Toggle — BIG */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); toggleLayer(layer.id, layer.enabled); }}
+                      title={layer.enabled ? 'Disable Layer' : 'Enable Layer'}
+                      style={{
+                        width: '36px', height: '36px',
+                        background: layer.enabled ? '#c94068' : '#3a1830',
+                        color: '#fff',
+                        border: `3px solid ${layer.enabled ? '#ff8fa3' : '#5a2848'}`,
+                        borderRadius: '50%',
+                        fontSize: '16px', fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: layer.enabled ? '0 3px 10px rgba(201,64,104,0.6)' : 'none',
+                      }}
+                    >{layer.enabled ? '●' : '○'}</button>
+                    {/* Delete — BIG */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); deleteLayer(layer.id); }}
+                      title="Delete Layer"
+                      style={{
+                        width: '36px', height: '36px',
+                        background: '#3a0820',
+                        color: '#ff4060',
+                        border: '3px solid #ff4060',
+                        borderRadius: '8px',
+                        fontSize: '14px', fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                    >✕</button>
                   </div>
                 </div>
               </div>
             ))}
-            {layers.length === 0 && <div className="p-4 text-center text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>ADD LAYER</div>}
+            {layers.length === 0 && <div className="p-4 text-center text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>NO LAYERS YET</div>}
           </div>
         </div>
 
-        {/* Center: Traits */}
+        {/* ── Center: Traits ── */}
         <div className="flex-1 flex flex-col min-w-0">
           {selectedLayer ? (
             <>
@@ -392,118 +476,121 @@ export default function Editor() {
                 <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedLayer.name} ({selectedLayer.traits.length})</div>
                 <div className="flex gap-2 items-center">
                   {uploading && <span className="text-xs text-[#ff8fa3] animate-pulse" style={{ fontFamily: "'Press Start 2P', monospace" }}>SENDING...</span>}
-                  <input type="file" ref={fileInputRef} multiple accept=".png,image/png" onChange={handleFileChange}
-                    id="trait-file-input" style={{ display: 'none' }} />
-                  <button onClick={() => { if (fileInputRef.current) { fileInputRef.current.value = ''; fileInputRef.current.click(); }}}
-                    className="pixel-btn pixel-btn-accent text-xs py-1 px-3" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                  <button
+                    onClick={handlePickFiles}
+                    style={{
+                      background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
+                      color: '#fff',
+                      border: '3px solid #ffb3c6',
+                      borderRadius: '10px',
+                      padding: '8px 20px',
+                      fontSize: '12px', fontWeight: 'bold',
+                      cursor: 'pointer',
+                      fontFamily: "'Press Start 2P', monospace",
+                      boxShadow: '0 4px 15px rgba(201,64,104,0.6)',
+                      letterSpacing: '1px',
+                    }}
+                  >
                     📤 UPLOAD PNG
                   </button>
                 </div>
               </div>
 
-              {/* Trait Settings */}
+              {/* Trait Settings Panel */}
               {selectedTrait && (
                 <div className="p-3 border-b-2 border-[#3a1830] bg-[#2a1020] shrink-0">
-                  <div className="text-xs text-[#e8758a] mb-2" style={{ fontFamily: "'Press Start 2P', monospace" }}>EDIT: {selectedTrait.display_name || selectedTrait.name}</div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>EDIT: {selectedTrait.display_name || selectedTrait.name}</div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1 bg-[#1a0a14] border-2 border-[#c94068] px-3 py-1 rounded">
+                        <span className="text-xs text-[#ff8fa3]" style={{ fontFamily: "'Press Start 2P', monospace" }}>X:</span>
+                        <span className="text-xs text-[#fff] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedTrait.x || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-1 bg-[#1a0a14] border-2 border-[#c94068] px-3 py-1 rounded">
+                        <span className="text-xs text-[#ff8fa3]" style={{ fontFamily: "'Press Start 2P', monospace" }}>Y:</span>
+                        <span className="text-xs text-[#fff] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedTrait.y || 0}</span>
+                      </div>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-3 gap-2 mb-2">
                     <div>
                       <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>NAME</label>
-                      <input type="text" value={selectedTrait.display_name || ''} onChange={(e) => { setSelectedTrait({ ...selectedTrait, display_name: e.target.value }); updateTrait(selectedTrait.id, { display_name: e.target.value }); }} className="w-full pixel-input text-xs" />
+                      <input type="text" value={selectedTrait.display_name || ''} onChange={(e) => updateTrait(selectedTrait.id, { display_name: e.target.value })} className="w-full pixel-input text-xs" />
                     </div>
                     <div>
                       <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>CATEGORY</label>
-                      <input type="text" value={selectedTrait.category_name || ''} onChange={(e) => { setSelectedTrait({ ...selectedTrait, category_name: e.target.value }); updateTrait(selectedTrait.id, { category_name: e.target.value }); }} className="w-full pixel-input text-xs" />
+                      <input type="text" value={selectedTrait.category_name || ''} onChange={(e) => updateTrait(selectedTrait.id, { category_name: e.target.value })} className="w-full pixel-input text-xs" />
                     </div>
                     <div>
                       <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>WEIGHT</label>
-                      <input type="number" min="1" value={selectedTrait.rarity_weight} onChange={(e) => { const v = parseInt(e.target.value) || 1; setSelectedTrait({ ...selectedTrait, rarity_weight: v }); updateTrait(selectedTrait.id, { rarity_weight: v }); }} className="w-full pixel-input text-xs" />
+                      <input type="number" min="1" value={selectedTrait.rarity_weight} onChange={(e) => updateTrait(selectedTrait.id, { rarity_weight: parseInt(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 mb-2">
                     <div>
                       <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>SCALE</label>
-                      <input type="number" step="0.1" min="0.1" max="5" value={selectedTrait.scale} onChange={(e) => { const v = parseFloat(e.target.value) || 1; setSelectedTrait({ ...selectedTrait, scale: v }); updateTrait(selectedTrait.id, { scale: v }); }} className="w-full pixel-input text-xs" />
+                      <input type="number" step="0.1" min="0.1" max="5" value={selectedTrait.scale} onChange={(e) => updateTrait(selectedTrait.id, { scale: parseFloat(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
                     </div>
                     <div>
                       <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>OPACITY</label>
-                      <input type="number" step="0.1" min="0" max="1" value={selectedTrait.opacity} onChange={(e) => { const v = parseFloat(e.target.value) || 1; setSelectedTrait({ ...selectedTrait, opacity: v }); updateTrait(selectedTrait.id, { opacity: v }); }} className="w-full pixel-input text-xs" />
+                      <input type="number" step="0.1" min="0" max="1" value={selectedTrait.opacity} onChange={(e) => updateTrait(selectedTrait.id, { opacity: parseFloat(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
                     </div>
                     <div className="flex items-end gap-2 pb-1">
-                      <input type="checkbox" checked={selectedTrait.optional} onChange={(e) => { setSelectedTrait({ ...selectedTrait, optional: e.target.checked }); updateTrait(selectedTrait.id, { optional: e.target.checked }); }} className="accent-[#c94068] w-4 h-4" />
+                      <input type="checkbox" checked={selectedTrait.optional} onChange={(e) => updateTrait(selectedTrait.id, { optional: e.target.checked })} className="accent-[#c94068] w-4 h-4" />
                       <label className="text-xs text-[#7a3860]" style={{ fontFamily: "'Press Start 2P', monospace" }}>OPT</label>
-                      <button onClick={() => deleteTrait(selectedTrait.id)} className="text-xs text-[#ff4060] hover:text-[#ff6080] ml-auto" style={{ fontFamily: "'Press Start 2P', monospace" }}>DEL</button>
+                      <button onClick={() => deleteTrait(selectedTrait.id)} style={{ background: '#3a0820', color: '#ff4060', border: '2px solid #ff4060', borderRadius: '6px', padding: '4px 10px', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer', fontFamily: "'Press Start 2P', monospace", marginLeft: 'auto' }}>DEL</button>
                     </div>
                   </div>
-                  {/* Position + Cursor Arrows */}
-                  <div className="flex items-center gap-4">
+
+                  {/* ── D-Pad Controls ── */}
+                  <div className="flex items-start gap-4 mt-2">
+                    {/* X/Y number inputs */}
                     <div className="flex gap-2 items-end">
                       <div>
                         <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>X</label>
-                        <input type="number" value={selectedTrait.x} onChange={(e) => { const v = parseInt(e.target.value) || 0; setSelectedTrait({ ...selectedTrait, x: v }); updateTrait(selectedTrait.id, { x: v }); }} className="w-16 pixel-input text-xs" />
+                        <input type="number" value={selectedTrait.x} onChange={(e) => updateTrait(selectedTrait.id, { x: parseInt(e.target.value) || 0 })} className="w-16 pixel-input text-xs" />
                       </div>
                       <div>
                         <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>Y</label>
-                        <input type="number" value={selectedTrait.y} onChange={(e) => { const v = parseInt(e.target.value) || 0; setSelectedTrait({ ...selectedTrait, y: v }); updateTrait(selectedTrait.id, { y: v }); }} className="w-16 pixel-input text-xs" />
+                        <input type="number" value={selectedTrait.y} onChange={(e) => updateTrait(selectedTrait.id, { y: parseInt(e.target.value) || 0 })} className="w-16 pixel-input text-xs" />
                       </div>
                     </div>
-                    {/* Nintendo D-Pad - 10px step */}
-                    <div className="ml-2" style={{ display: 'inline-grid', gridTemplateColumns: '36px 36px 36px', gridTemplateRows: '36px 36px 36px', gap: '2px' }}>
+
+                    {/* BIG D-Pad — 10px */}
+                    <div style={{ display: 'inline-grid', gridTemplateColumns: '48px 48px 48px', gridTemplateRows: '48px 48px 48px', gap: '3px' }}>
                       <div />
-                      <button onClick={() => moveTraitPosition(0, -10)} title="Up 10px"
-                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px 4px 0 0' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▲
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(0, -10)} title="Up 10px"
+                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px 10px 0 0', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▲</button>
                       <div />
-                      <button onClick={() => moveTraitPosition(-10, 0)} title="Left 10px"
-                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px 0 0 4px' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ◀
-                      </button>
-                      <div style={{ background: '#2a1020', border: '3px solid #5a2848', borderRadius: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>10</span>
+                      <button onPointerDown={() => moveTraitPosition(-10, 0)} title="Left 10px"
+                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px 0 0 10px', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>◀</button>
+                      <div style={{ background: '#1a0a14', border: '3px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className="text-xs text-[#ff8fa3] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>10</span>
                       </div>
-                      <button onClick={() => moveTraitPosition(10, 0)} title="Right 10px"
-                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 4px 4px 0' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▶
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(10, 0)} title="Right 10px"
+                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 10px 10px 0', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▶</button>
                       <div />
-                      <button onClick={() => moveTraitPosition(0, 10)} title="Down 10px"
-                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 4px 4px' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▼
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(0, 10)} title="Down 10px"
+                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 10px 10px', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▼</button>
                       <div />
                     </div>
-                    {/* Nintendo D-Pad - 1px fine */}
-                    <div className="ml-1" style={{ display: 'inline-grid', gridTemplateColumns: '28px 28px 28px', gridTemplateRows: '28px 28px 28px', gap: '1px' }}>
+
+                    {/* SMALL D-Pad — 1px fine */}
+                    <div style={{ display: 'inline-grid', gridTemplateColumns: '38px 38px 38px', gridTemplateRows: '38px 38px 38px', gap: '2px' }}>
                       <div />
-                      <button onClick={() => moveTraitPosition(0, -1)} title="Up 1px"
-                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '3px 3px 0 0' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▴
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(0, -1)} title="Up 1px"
+                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '6px 6px 0 0' }}>▴</button>
                       <div />
-                      <button onClick={() => moveTraitPosition(-1, 0)} title="Left 1px"
-                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '3px 0 0 3px' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ◂
-                      </button>
-                      <div style={{ background: '#2a1020', border: '2px solid #5a2848', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>1</span>
+                      <button onPointerDown={() => moveTraitPosition(-1, 0)} title="Left 1px"
+                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '6px 0 0 6px' }}>◂</button>
+                      <div style={{ background: '#1a0a14', border: '2px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className="text-xs text-[#ff8fa3] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>1</span>
                       </div>
-                      <button onClick={() => moveTraitPosition(1, 0)} title="Right 1px"
-                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 3px 3px 0' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▸
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(1, 0)} title="Right 1px"
+                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 6px 6px 0' }}>▸</button>
                       <div />
-                      <button onClick={() => moveTraitPosition(0, 1)} title="Down 1px"
-                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 3px 3px' }}
-                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
-                        ▾
-                      </button>
+                      <button onPointerDown={() => moveTraitPosition(0, 1)} title="Down 1px"
+                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 6px 6px' }}>▾</button>
                       <div />
                     </div>
                   </div>
@@ -524,8 +611,8 @@ export default function Editor() {
                 <div className="grid grid-cols-5 gap-3">
                   {selectedLayer.traits.map((trait) => (
                     <div key={trait.id}
-                      className={`relative bg-[#2a1020] pixel-border p-2 cursor-pointer transition-all ${selectedTrait?.id === trait.id ? 'sakura-glow border-[#ff8fa3]!' : ''}`}
-                      onClick={() => setSelectedTrait(trait)}>
+                      className={`relative bg-[#2a1020] pixel-border p-2 cursor-pointer transition-all ${selectedTraitId === trait.id ? 'sakura-glow border-[#ff8fa3]!' : ''}`}
+                      onClick={() => setSelectedTraitId(trait.id)}>
                       <div className="aspect-square bg-[#1a0a14] mb-2 flex items-center justify-center overflow-hidden border border-[#3a1830]">
                         <img src={`/api/collections/${collectionId}/traits/${trait.filename}`} alt={trait.name}
                           className="max-w-full max-h-full object-contain" style={{ imageRendering: 'pixelated' }} loading="lazy" />
@@ -542,10 +629,19 @@ export default function Editor() {
                     <div className="text-xs text-[#5a2848] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>
                       UPLOAD PNG OR DRAG HERE
                     </div>
-                    <button onClick={() => { if (fileInputRef.current) { fileInputRef.current.value = ''; fileInputRef.current.click(); }}}
-                      className="pixel-btn pixel-btn-accent text-xs" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-                      📤 CLICK TO UPLOAD
-                    </button>
+                    <button onClick={handlePickFiles}
+                      style={{
+                        background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
+                        color: '#fff',
+                        border: '3px solid #ffb3c6',
+                        borderRadius: '12px',
+                        padding: '12px 28px',
+                        fontSize: '13px', fontWeight: 'bold',
+                        cursor: 'pointer',
+                        fontFamily: "'Press Start 2P', monospace",
+                        boxShadow: '0 4px 15px rgba(201,64,104,0.6)',
+                      }}
+                    >📤 UPLOAD</button>
                   </div>
                 )}
               </div>
@@ -560,7 +656,7 @@ export default function Editor() {
           )}
         </div>
 
-        {/* Right: Preview */}
+        {/* ── Right: Preview ── */}
         <div className="w-64 border-l-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm flex flex-col shrink-0">
           <div className="p-3 border-b-2 border-[#3a1830]">
             <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>PREVIEW 512x512</div>
