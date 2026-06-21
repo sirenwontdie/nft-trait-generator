@@ -392,11 +392,12 @@ export default function Editor() {
                 <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedLayer.name} ({selectedLayer.traits.length})</div>
                 <div className="flex gap-2 items-center">
                   {uploading && <span className="text-xs text-[#ff8fa3] animate-pulse" style={{ fontFamily: "'Press Start 2P', monospace" }}>SENDING...</span>}
-                  <label className="pixel-btn pixel-btn-accent text-xs py-1 px-3 cursor-pointer inline-block" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                  <input type="file" ref={fileInputRef} multiple accept=".png,image/png" onChange={handleFileChange}
+                    id="trait-file-input" style={{ display: 'none' }} />
+                  <button onClick={() => { if (fileInputRef.current) { fileInputRef.current.value = ''; fileInputRef.current.click(); }}}
+                    className="pixel-btn pixel-btn-accent text-xs py-1 px-3" style={{ fontFamily: "'Press Start 2P', monospace" }}>
                     📤 UPLOAD PNG
-                    <input type="file" ref={fileInputRef} multiple accept=".png,image/png" onChange={handleFileChange}
-                      style={{ position: 'absolute', left: '-9999px', opacity: 0, width: 0, height: 0 }} tabIndex={-1} />
-                  </label>
+                  </button>
                 </div>
               </div>
 
@@ -445,21 +446,65 @@ export default function Editor() {
                         <input type="number" value={selectedTrait.y} onChange={(e) => { const v = parseInt(e.target.value) || 0; setSelectedTrait({ ...selectedTrait, y: v }); updateTrait(selectedTrait.id, { y: v }); }} className="w-16 pixel-input text-xs" />
                       </div>
                     </div>
-                    {/* 10px step arrows */}
-                    <div className="cursor-arrows ml-2">
-                      <div /><button onClick={() => moveTraitPosition(0, -10)} title="Up 10px">▲</button><div />
-                      <button onClick={() => moveTraitPosition(-10, 0)} title="Left 10px">◀</button>
-                      <div className="flex items-center justify-center text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>↕</div>
-                      <button onClick={() => moveTraitPosition(10, 0)} title="Right 10px">▶</button>
-                      <div /><button onClick={() => moveTraitPosition(0, 10)} title="Down 10px">▼</button><div />
+                    {/* Nintendo D-Pad - 10px step */}
+                    <div className="ml-2" style={{ display: 'inline-grid', gridTemplateColumns: '36px 36px 36px', gridTemplateRows: '36px 36px 36px', gap: '2px' }}>
+                      <div />
+                      <button onClick={() => moveTraitPosition(0, -10)} title="Up 10px"
+                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px 4px 0 0' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▲
+                      </button>
+                      <div />
+                      <button onClick={() => moveTraitPosition(-10, 0)} title="Left 10px"
+                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '4px 0 0 4px' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ◀
+                      </button>
+                      <div style={{ background: '#2a1020', border: '3px solid #5a2848', borderRadius: '0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>10</span>
+                      </div>
+                      <button onClick={() => moveTraitPosition(10, 0)} title="Right 10px"
+                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 4px 4px 0' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▶
+                      </button>
+                      <div />
+                      <button onClick={() => moveTraitPosition(0, 10)} title="Down 10px"
+                        style={{ background: '#3a1830', border: '3px solid #5a2848', color: '#ffb3c6', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 4px 4px' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▼
+                      </button>
+                      <div />
                     </div>
-                    {/* 1px fine arrows */}
-                    <div className="ml-1" style={{ display: 'grid', gridTemplateColumns: '28px 28px 28px', gridTemplateRows: '28px 28px 28px', gap: '2px' }}>
-                      <div /><button onClick={() => moveTraitPosition(0, -1)} title="Up 1px" className="bg-[#3a1830] border-2 border-[#5a2848] text-[#e8758a] hover:bg-[#c94068] hover:text-white text-xs flex items-center justify-center cursor-pointer">▴</button><div />
-                      <button onClick={() => moveTraitPosition(-1, 0)} title="Left 1px" className="bg-[#3a1830] border-2 border-[#5a2848] text-[#e8758a] hover:bg-[#c94068] hover:text-white text-xs flex items-center justify-center cursor-pointer">◂</button>
-                      <div className="flex items-center justify-center text-xs text-[#5a2848]">·</div>
-                      <button onClick={() => moveTraitPosition(1, 0)} title="Right 1px" className="bg-[#3a1830] border-2 border-[#5a2848] text-[#e8758a] hover:bg-[#c94068] hover:text-white text-xs flex items-center justify-center cursor-pointer">▸</button>
-                      <div /><button onClick={() => moveTraitPosition(0, 1)} title="Down 1px" className="bg-[#3a1830] border-2 border-[#5a2848] text-[#e8758a] hover:bg-[#c94068] hover:text-white text-xs flex items-center justify-center cursor-pointer">▾</button><div />
+                    {/* Nintendo D-Pad - 1px fine */}
+                    <div className="ml-1" style={{ display: 'inline-grid', gridTemplateColumns: '28px 28px 28px', gridTemplateRows: '28px 28px 28px', gap: '1px' }}>
+                      <div />
+                      <button onClick={() => moveTraitPosition(0, -1)} title="Up 1px"
+                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '3px 3px 0 0' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▴
+                      </button>
+                      <div />
+                      <button onClick={() => moveTraitPosition(-1, 0)} title="Left 1px"
+                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '3px 0 0 3px' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ◂
+                      </button>
+                      <div style={{ background: '#2a1020', border: '2px solid #5a2848', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>1</span>
+                      </div>
+                      <button onClick={() => moveTraitPosition(1, 0)} title="Right 1px"
+                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 3px 3px 0' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▸
+                      </button>
+                      <div />
+                      <button onClick={() => moveTraitPosition(0, 1)} title="Down 1px"
+                        style={{ background: '#3a1830', border: '2px solid #5a2848', color: '#e8758a', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 3px 3px' }}
+                        onMouseDown={(e) => e.currentTarget.style.background = '#c94068'} onMouseUp={(e) => e.currentTarget.style.background = '#3a1830'} onMouseLeave={(e) => e.currentTarget.style.background = '#3a1830'}>
+                        ▾
+                      </button>
+                      <div />
                     </div>
                   </div>
                 </div>
@@ -494,12 +539,13 @@ export default function Editor() {
                 {selectedLayer.traits.length === 0 && !dragOver && (
                   <div className="text-center py-16">
                     <div className="text-4xl mb-4">📁</div>
-                    <div className="text-xs text-[#5a2848] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>UPLOAD PNG OR DRAG HERE</div>
-                    <label className="pixel-btn pixel-btn-accent text-xs cursor-pointer inline-block" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                    <div className="text-xs text-[#5a2848] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                      UPLOAD PNG OR DRAG HERE
+                    </div>
+                    <button onClick={() => { if (fileInputRef.current) { fileInputRef.current.value = ''; fileInputRef.current.click(); }}}
+                      className="pixel-btn pixel-btn-accent text-xs" style={{ fontFamily: "'Press Start 2P', monospace" }}>
                       📤 CLICK TO UPLOAD
-                      <input type="file" multiple accept=".png,image/png" onChange={handleFileChange}
-                        style={{ position: 'absolute', left: '-9999px', opacity: 0, width: 0, height: 0 }} />
-                    </label>
+                    </button>
                   </div>
                 )}
               </div>
