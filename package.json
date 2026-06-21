@@ -1,0 +1,26 @@
+{
+  "name": "nft-trait-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "sharp": "^0.33.0",
+    "jszip": "^3.10.0",
+    "better-sqlite3": "^11.0.0",
+    "multer": "^1.4.5-lts.1",
+    "csv-stringify": "^6.5.0",
+    "react-beautiful-dnd": "^13.1.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}
