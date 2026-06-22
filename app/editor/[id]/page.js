@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 // ── Animated Sakura Petals ──
@@ -11,78 +11,6 @@ function SakuraPetals() {
         <div key={i} className="petal" style={{ animationDelay: `${i * 0.7}s` }} />
       ))}
     </>
-  );
-}
-
-// ── Pixel Sakura Tree (left side) ──
-function SakuraTreeLeft() {
-  return (
-    <svg className="sakura-tree-left" width="220" height="400" viewBox="0 0 220 400">
-      <rect x="100" y="280" width="18" height="120" fill="#4a1838" />
-      <rect x="95" y="350" width="28" height="12" fill="#4a1838" />
-      <rect x="88" y="360" width="42" height="8" fill="#4a1838" />
-      <rect x="60" y="260" width="58" height="6" fill="#4a1838" rx="3" />
-      <rect x="40" y="240" width="45" height="5" fill="#4a1838" rx="2" />
-      <rect x="110" y="250" width="50" height="5" fill="#4a1838" rx="2" />
-      <rect x="120" y="230" width="35" height="4" fill="#4a1838" rx="2" />
-      <rect x="80" y="180" width="12" height="12" fill="#ff8fa3" rx="2" />
-      <rect x="96" y="175" width="14" height="14" fill="#ffb3c6" rx="2" />
-      <rect x="114" y="180" width="10" height="10" fill="#ff8fa3" rx="2" />
-      <rect x="88" y="165" width="16" height="16" fill="#c94068" rx="2" />
-      <rect x="106" y="168" width="12" height="12" fill="#ffb3c6" rx="2" />
-      <rect x="55" y="210" width="14" height="14" fill="#ffb3c6" rx="2" />
-      <rect x="72" y="205" width="12" height="12" fill="#ff8fa3" rx="2" />
-      <rect x="48" y="225" width="10" height="10" fill="#c94068" rx="2" />
-      <rect x="62" y="222" width="14" height="14" fill="#ff8fa3" rx="2" />
-      <rect x="80" y="215" width="10" height="10" fill="#ffb3c6" rx="2" />
-      <rect x="125" y="200" width="12" height="12" fill="#ffb3c6" rx="2" />
-      <rect x="140" y="195" width="14" height="14" fill="#ff8fa3" rx="2" />
-      <rect x="155" y="205" width="10" height="10" fill="#c94068" rx="2" />
-      <rect x="130" y="215" width="10" height="10" fill="#c94068" rx="2" />
-      <rect x="142" y="210" width="12" height="12" fill="#ffb3c6" rx="2" />
-      <rect x="42" y="195" width="8" height="8" fill="#ff8fa3" rx="1" />
-      <rect x="165" y="185" width="8" height="8" fill="#ffb3c6" rx="1" />
-      <rect x="95" y="155" width="6" height="6" fill="#ffb3c6" rx="1" />
-      <rect x="118" y="160" width="7" height="7" fill="#c94068" rx="1" />
-      <rect x="35" y="280" width="5" height="5" fill="#ff8fa3" rx="1" opacity="0.6">
-        <animateTransform attributeName="transform" type="translate" values="0,0; 15,40; 5,80" dur="4s" repeatCount="indefinite" />
-      </rect>
-      <rect x="170" y="260" width="4" height="4" fill="#ffb3c6" rx="1" opacity="0.5">
-        <animateTransform attributeName="transform" type="translate" values="0,0; -10,50; -20,100" dur="5s" repeatCount="indefinite" />
-      </rect>
-      <rect x="90" y="190" width="4" height="4" fill="#ffb3c6" rx="1" opacity="0.7">
-        <animateTransform attributeName="transform" type="translate" values="0,0; 8,60; -5,120" dur="6s" repeatCount="indefinite" />
-      </rect>
-    </svg>
-  );
-}
-
-// ── Pixel Sakura Tree (right side, smaller) ──
-function SakuraTreeRight() {
-  return (
-    <svg className="sakura-tree-right" width="160" height="320" viewBox="0 0 160 320">
-      <rect x="70" y="220" width="14" height="100" fill="#4a1838" />
-      <rect x="65" y="290" width="24" height="10" fill="#4a1838" />
-      <rect x="45" y="210" width="38" height="5" fill="#4a1838" rx="2" />
-      <rect x="80" y="200" width="35" height="4" fill="#4a1838" rx="2" />
-      <rect x="35" y="195" width="30" height="4" fill="#4a1838" rx="2" />
-      <rect x="30" y="160" width="12" height="12" fill="#ffb3c6" rx="2" />
-      <rect x="46" y="155" width="14" height="14" fill="#ff8fa3" rx="2" />
-      <rect x="62" y="158" width="10" height="10" fill="#c94068" rx="2" />
-      <rect x="38" y="145" width="10" height="10" fill="#ff8fa3" rx="2" />
-      <rect x="55" y="142" width="12" height="12" fill="#ffb3c6" rx="2" />
-      <rect x="75" y="150" width="8" height="8" fill="#ff8fa3" rx="1" />
-      <rect x="85" y="170" width="10" height="10" fill="#ffb3c6" rx="2" />
-      <rect x="98" y="165" width="12" height="12" fill="#c94068" rx="2" />
-      <rect x="112" y="172" width="8" height="8" fill="#ff8fa3" rx="1" />
-      <rect x="90" y="155" width="8" height="8" fill="#ffb3c6" rx="1" />
-      <rect x="25" y="200" width="4" height="4" fill="#ffb3c6" rx="1" opacity="0.6">
-        <animateTransform attributeName="transform" type="translate" values="0,0; 10,35; -5,70" dur="4.5s" repeatCount="indefinite" />
-      </rect>
-      <rect x="110" y="185" width="3" height="3" fill="#ff8fa3" rx="1" opacity="0.5">
-        <animateTransform attributeName="transform" type="translate" values="0,0; -8,40; 5,85" dur="5.5s" repeatCount="indefinite" />
-      </rect>
-    </svg>
   );
 }
 
@@ -99,11 +27,81 @@ function openFilePicker(onFiles) {
     document.body.removeChild(input);
     if (files.length > 0) onFiles(files);
   });
-  // Cleanup on cancel (no change event fires)
   input.addEventListener('blur', () => {
     setTimeout(() => { if (document.body.contains(input)) document.body.removeChild(input); }, 300);
   });
   input.click();
+}
+
+// ── Live Canvas Preview ──
+function LivePreview({ layers, collectionId, previewUrl, canvasRef }) {
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = 512, H = 512;
+    canvas.width = W;
+    canvas.height = H;
+
+    ctx.clearRect(0, 0, W, H);
+    // Checkerboard
+    for (let y = 0; y < H; y += 16) {
+      for (let x = 0; x < W; x += 16) {
+        ctx.fillStyle = ((x / 16 + y / 16) % 2 === 0) ? '#2a1020' : '#1a0a14';
+        ctx.fillRect(x, y, 16, 16);
+      }
+    }
+
+    if (previewUrl) {
+      const img = new Image();
+      img.onload = () => { ctx.drawImage(img, 0, 0, W, H); };
+      img.src = previewUrl;
+      return;
+    }
+
+    const enabledLayers = layers.filter(l => l.enabled && l.traits && l.traits.length > 0);
+    if (enabledLayers.length === 0) return;
+
+    let loaded = 0;
+    const total = enabledLayers.length;
+    enabledLayers.forEach((layer) => {
+      const trait = layer.traits[Math.floor(Math.random() * layer.traits.length)];
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const x = trait.x || 0;
+        const y = trait.y || 0;
+        const scale = trait.scale || 1;
+        const opacity = trait.opacity ?? 1;
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        const w = W * scale;
+        const h = H * scale;
+        ctx.drawImage(img, x, y, w, h);
+        ctx.restore();
+        loaded++;
+      };
+      img.onerror = () => { loaded++; };
+      img.src = `/api/collections/${collectionId}/traits/${trait.filename}`;
+    });
+  }, [layers, collectionId, previewUrl]);
+
+  return (
+    <div className="w-full h-full flex items-center justify-center p-2">
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: '100%',
+          maxWidth: '512px',
+          aspectRatio: '1/1',
+          imageRendering: 'pixelated',
+          border: '3px solid #5a2848',
+          borderRadius: '4px',
+          background: '#1a0a14'
+        }}
+      />
+    </div>
+  );
 }
 
 // ── Main Editor ──
@@ -124,8 +122,9 @@ export default function Editor() {
   const [newLayerName, setNewLayerName] = useState('');
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [moveStep, setMoveStep] = useState(10);
+  const canvasRef = useRef(null);
 
-  // Derive selected objects
   const selectedLayer = layers.find(l => l.id === selectedLayerId) || null;
   const selectedTrait = selectedLayer ? selectedLayer.traits.find(t => t.id === selectedTraitId) || null : null;
 
@@ -264,12 +263,17 @@ export default function Editor() {
     } catch (e) { fetchLayers(); }
   };
 
-  // ── Cursor Arrow Move ──
   const moveTraitPosition = (dx, dy) => {
     if (!selectedTrait) return;
     const newX = (selectedTrait.x || 0) + dx;
     const newY = (selectedTrait.y || 0) + dy;
     updateTrait(selectedTrait.id, { x: newX, y: newY });
+  };
+
+  const resizeTrait = (delta) => {
+    if (!selectedTrait) return;
+    const newScale = Math.max(0.1, Math.min(5, (selectedTrait.scale || 1) + delta));
+    updateTrait(selectedTrait.id, { scale: newScale });
   };
 
   const generatePreview = async () => {
@@ -325,401 +329,362 @@ export default function Editor() {
   if (!collection) {
     return (
       <div className="min-h-screen bg-[#1a0a14] flex items-center justify-center relative overflow-hidden">
-        <SakuraTreeLeft />
-        <SakuraTreeRight />
         <div className="text-[#e8758a] animate-pulse z-10" style={{ fontFamily: "'Press Start 2P', monospace" }}>LOADING...</div>
       </div>
     );
   }
 
+  // ── Pixel font style shorthand ──
+  const pf = (size, color) => ({ fontFamily: "'Press Start 2P', monospace", fontSize: size, color });
+
   return (
-    <div className="h-screen bg-[#1a0a14] flex flex-col overflow-hidden relative pixel-grid">
+    <div className="h-screen bg-[#1a0a14] flex flex-col overflow-hidden relative">
       <SakuraPetals />
-      <SakuraTreeLeft />
-      <SakuraTreeRight />
 
       {/* Header */}
-      <header className="relative z-10 border-b-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm px-4 py-2 flex items-center justify-between shrink-0">
+      <header className="relative z-10 border-b-2 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm px-3 py-1.5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/')} className="pixel-btn text-xs py-1 px-2">← BACK</button>
-          <div className="w-px h-5 bg-[#5a2848]" />
-          <span className="text-xs text-[#ffb3c6]" style={{ fontFamily: "'Press Start 2P', monospace" }}>{collection.name}</span>
-          <span className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>512x512</span>
+          <button onClick={() => router.push('/')} className="text-[8px] text-[#ffb3c6] bg-[#c94068] border border-[#ff8fa3] rounded px-2 py-1 cursor-pointer hover:bg-[#ff8fa3] hover:text-[#1a0a14] transition-all" style={pf('8px', '#fff')}>← BACK</button>
+          <div className="w-px h-4 bg-[#5a2848]" />
+          <span style={pf('9px', '#ffb3c6')}>{collection.name}</span>
+          <span style={pf('7px', '#5a2848')}>512×512</span>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => setShowSettings(true)} className="pixel-btn text-xs py-1 px-2">⚙</button>
-          <button onClick={generatePreview} className="pixel-btn text-xs py-1 px-2">🎲</button>
-          <button onClick={() => setShowGenerate(true)} className="pixel-btn pixel-btn-accent text-xs py-1 px-2">⚡ GEN</button>
-          <button onClick={runValidation} className="pixel-btn text-xs py-1 px-2">✓</button>
-          <button onClick={exportZip} className="pixel-btn text-xs py-1 px-2">📦</button>
+          <button onClick={() => setShowSettings(true)} className="text-[9px] text-[#ffb3c6] bg-[#3a1830] border border-[#5a2848] rounded px-2 py-1 cursor-pointer hover:bg-[#5a2848] transition-all">⚙</button>
+          <button onClick={generatePreview} className="text-[9px] text-[#ffb3c6] bg-[#3a1830] border border-[#5a2848] rounded px-2 py-1 cursor-pointer hover:bg-[#5a2848] transition-all">🎲</button>
+          <button onClick={() => setShowGenerate(true)} className="text-[9px] text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-3 py-1 cursor-pointer hover:brightness-110 transition-all" style={pf('8px', '#fff')}>⚡ GEN</button>
+          <button onClick={runValidation} className="text-[9px] text-[#ffb3c6] bg-[#3a1830] border border-[#5a2848] rounded px-2 py-1 cursor-pointer hover:bg-[#5a2848] transition-all">✓</button>
+          <button onClick={exportZip} className="text-[9px] text-[#ffb3c6] bg-[#3a1830] border border-[#5a2848] rounded px-2 py-1 cursor-pointer hover:bg-[#5a2848] transition-all">📦</button>
         </div>
       </header>
 
-      {/* Main 3-column */}
+      {/* ═══ 3-COLUMN LAYOUT ═══ */}
       <div className="flex flex-1 overflow-hidden relative z-10">
-        {/* ── Left: Layers ── */}
-        <div className="w-72 border-r-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm flex flex-col shrink-0">
-          <div className="p-3 border-b-2 border-[#3a1830]">
-            <div className="text-xs text-[#e8758a] mb-2" style={{ fontFamily: "'Press Start 2P', monospace" }}>LAYERS</div>
-            <div className="flex gap-2">
+
+        {/* ── COL 1: Layers (compact with thumbnails) ── */}
+        <div className="w-48 border-r-2 border-[#5a2848] bg-[#2a1020]/95 flex flex-col shrink-0">
+          <div className="p-1 border-b border-[#3a1830]">
+            <div style={pf('4px', '#e8758a')} className="mb-1 text-center">LAYERS</div>
+            <div className="flex gap-0.5">
               <input type="text" value={newLayerName} onChange={(e) => setNewLayerName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addLayer()}
-                className="flex-1 pixel-input text-xs" placeholder="New layer..." />
+                className="flex-1 bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-1 py-0.5 outline-none focus:border-[#c94068] min-w-0"
+                style={pf('3px', '#ffb3c6')} placeholder="Name..." />
               <button onClick={addLayer}
-                style={{
-                  background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
-                  color: '#fff',
-                  border: '2px solid #ffb3c6',
-                  borderRadius: '8px',
-                  padding: '6px 14px',
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  fontFamily: "'Press Start 2P', monospace",
-                  boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
-                }}>
-                + ADD
-              </button>
+                className="text-[6px] text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-1 py-0.5 cursor-pointer font-bold shrink-0">+</button>
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">
-            {layers.map((layer) => (
-              <div key={layer.id}
-                className={`p-2 border-b border-[#3a1830] cursor-pointer transition-all ${selectedLayerId === layer.id ? 'bg-[#c94068]/20 border-l-4 border-l-[#ff8fa3]' : 'hover:bg-[#3a1830]'}`}
-                onClick={() => { setSelectedLayerId(layer.id); setSelectedTraitId(null); }}>
-                <div className="flex items-center justify-between gap-1">
-                  <div className="flex items-center gap-1">
-                    {/* ▲ UP — BIG, BOLD */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'up'); }}
-                      title="Move Up"
-                      style={{
-                        width: '40px', height: '40px',
-                        background: '#c94068',
-                        color: '#fff',
-                        border: '3px solid #ff8fa3',
-                        borderRadius: '8px',
-                        fontSize: '18px', fontWeight: 'bold',
-                        cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
-                        flexShrink: 0,
-                      }}
-                    >▲</button>
-                    {/* ▼ DOWN — BIG, BOLD */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'down'); }}
-                      title="Move Down"
-                      style={{
-                        width: '40px', height: '40px',
-                        background: '#c94068',
-                        color: '#fff',
-                        border: '3px solid #ff8fa3',
-                        borderRadius: '8px',
-                        fontSize: '18px', fontWeight: 'bold',
-                        cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 3px 10px rgba(201,64,104,0.6)',
-                        flexShrink: 0,
-                      }}
-                    >▼</button>
-                    <div className="flex flex-col min-w-0 ml-1">
-                      <span className={`text-xs truncate ${layer.enabled ? 'text-[#ffb3c6]' : 'text-[#5a2848] line-through'}`} style={{ fontFamily: "'Press Start 2P', monospace" }}>{layer.name}</span>
-                      <span className="text-[10px] text-[#7a3860]">{layer.traits.length} traits</span>
+            {layers.map((layer, idx) => {
+              const thumbTrait = selectedLayerId === layer.id && selectedTrait
+                ? selectedTrait
+                : (layer.traits && layer.traits.length > 0 ? layer.traits[0] : null);
+              return (
+                <div key={layer.id}
+                  className={`flex items-center px-1 py-1 border-b border-[#3a1830] cursor-pointer transition-all gap-1 ${selectedLayerId === layer.id ? 'bg-[#c94068]/25 border-l-2 border-l-[#ff8fa3]' : 'hover:bg-[#3a1830] border-l-2 border-l-transparent'}`}
+                  onClick={() => { setSelectedLayerId(layer.id); setSelectedTraitId(null); }}>
+                  <span style={pf('3px', '#7a3860')} className="shrink-0">{idx + 1}.</span>
+                  <span className={`flex-1 truncate ${layer.enabled ? '' : 'line-through'}`}
+                    style={pf('3px', layer.enabled ? '#ffb3c6' : '#5a2848')}>{layer.name}</span>
+                  {thumbTrait ? (
+                    <div className="w-6 h-6 bg-[#1a0a14] border border-[#3a1830] shrink-0 overflow-hidden rounded-sm">
+                      <img src={`/api/collections/${collectionId}/traits/${thumbTrait.filename}`} alt=""
+                        className="w-full h-full object-contain" style={{ imageRendering: 'pixelated' }} loading="lazy" />
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1 flex-shrink-0">
-                    {/* Toggle — BIG */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); toggleLayer(layer.id, layer.enabled); }}
-                      title={layer.enabled ? 'Disable Layer' : 'Enable Layer'}
-                      style={{
-                        width: '36px', height: '36px',
-                        background: layer.enabled ? '#c94068' : '#3a1830',
-                        color: '#fff',
-                        border: `3px solid ${layer.enabled ? '#ff8fa3' : '#5a2848'}`,
-                        borderRadius: '50%',
-                        fontSize: '16px', fontWeight: 'bold',
-                        cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: layer.enabled ? '0 3px 10px rgba(201,64,104,0.6)' : 'none',
-                      }}
-                    >{layer.enabled ? '●' : '○'}</button>
-                    {/* Delete — BIG */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); deleteLayer(layer.id); }}
-                      title="Delete Layer"
-                      style={{
-                        width: '36px', height: '36px',
-                        background: '#3a0820',
-                        color: '#ff4060',
-                        border: '3px solid #ff4060',
-                        borderRadius: '8px',
-                        fontSize: '14px', fontWeight: 'bold',
-                        cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}
-                    >✕</button>
+                  ) : (
+                    <div className="w-6 h-6 bg-[#1a0a14] border border-[#3a1830] shrink-0 rounded-sm flex items-center justify-center">
+                      <span style={pf('2px', '#5a2848')}>—</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-px shrink-0">
+                    <button onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'up'); }}
+                      style={{ width: '10px', height: '10px', background: '#c94068', color: '#fff', border: '1px solid #ff8fa3', borderRadius: '1px', fontSize: '5px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>▲</button>
+                    <button onClick={(e) => { e.stopPropagation(); moveLayer(layer.id, 'down'); }}
+                      style={{ width: '10px', height: '10px', background: '#c94068', color: '#fff', border: '1px solid #ff8fa3', borderRadius: '1px', fontSize: '5px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>▼</button>
+                    <button onClick={(e) => { e.stopPropagation(); toggleLayer(layer.id, layer.enabled); }}
+                      style={{ width: '10px', height: '10px', background: layer.enabled ? '#c94068' : '#3a1830', color: '#fff', border: `1px solid ${layer.enabled ? '#ff8fa3' : '#5a2848'}`, borderRadius: '50%', fontSize: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {layer.enabled ? '●' : '○'}
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); deleteLayer(layer.id); }}
+                      style={{ width: '10px', height: '10px', background: '#3a0820', color: '#ff4060', border: '1px solid #ff4060', borderRadius: '1px', fontSize: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
                   </div>
                 </div>
-              </div>
-            ))}
-            {layers.length === 0 && <div className="p-4 text-center text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>NO LAYERS YET</div>}
+              );
+            })}
+            {layers.length === 0 && <div className="p-1 text-center" style={pf('3px', '#5a2848')}>EMPTY</div>}
           </div>
         </div>
 
-        {/* ── Center: Traits ── */}
-        <div className="flex-1 flex flex-col min-w-0">
-          {selectedLayer ? (
+        {/* ── CENTER: Traits List + Live Preview ── */}
+        <div className="flex-1 flex min-w-0">
+
+          {/* ── Center-Left: Traits List ── */}
+          <div className="w-[260px] border-r-2 border-[#5a2848] bg-[#2a1020]/95 flex flex-col shrink-0">
+            <div className="p-1 border-b border-[#3a1830] flex items-center justify-between">
+              <div style={pf('5px', '#e8758a')}>TRAITS</div>
+              <div className="flex items-center gap-1">
+                {uploading && <span style={pf('4px', '#ff8fa3')} className="animate-pulse">UP...</span>}
+                {selectedLayer && (
+                  <button onClick={handlePickFiles}
+                    className="text-[6px] text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-1 py-0.5 cursor-pointer font-bold">📤</button>
+                )}
+              </div>
+            </div>
+            {/* Table Header */}
+            <div className="flex items-center px-2 py-0.5 border-b border-[#3a1830]" style={pf('3px', '#5a2848')}>
+              <span className="w-16">LAYER</span>
+              <span className="flex-1">SELECTED TRAIT</span>
+            </div>
+            {/* Compact traits list */}
+            <div className={`flex-1 overflow-y-auto ${dragOver ? 'bg-[#c94068]/10' : ''}`}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
+              onDrop={handleDrop}>
+              {dragOver && (
+                <div className="border border-dashed border-[#ff8fa3] p-1 text-center bg-[#c94068]/10">
+                  <div style={pf('4px', '#ff8fa3')}>DROP HERE</div>
+                </div>
+              )}
+              {layers.map((layer) => {
+                const isSelected = selectedLayerId === layer.id;
+                const activeTrait = isSelected && selectedTrait
+                  ? selectedTrait
+                  : (layer.traits && layer.traits.length > 0 ? layer.traits[0] : null);
+                return (
+                  <div key={layer.id}
+                    className={`flex items-center px-2 py-1.5 border-b border-[#3a1830] gap-2 cursor-pointer transition-all ${isSelected ? 'bg-[#c94068]/20' : 'hover:bg-[#3a1830]'}`}
+                    onClick={() => { setSelectedLayerId(layer.id); setSelectedTraitId(null); }}>
+                    <span className={`w-16 truncate text-[7px] ${layer.enabled ? '' : 'line-through'}`}
+                      style={{ color: layer.enabled ? '#ffb3c6' : '#5a2848', fontFamily: "'Press Start 2P', monospace" }}>
+                      {layer.name}
+                    </span>
+                    {activeTrait ? (
+                      <div
+                        className={`w-10 h-10 bg-[#1a0a14] border flex items-center justify-center shrink-0 overflow-hidden rounded-sm cursor-pointer transition-all ${isSelected ? 'border-[#ff8fa3]' : 'border-[#3a1830] hover:border-[#c94068]'}`}
+                        onClick={(e) => { e.stopPropagation(); setSelectedTraitId(activeTrait.id); setSelectedLayerId(layer.id); }}>
+                        <img src={`/api/collections/${collectionId}/traits/${activeTrait.filename}`} alt=""
+                          className="w-full h-full object-contain" style={{ imageRendering: 'pixelated' }} loading="lazy" />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 bg-[#1a0a14] border border-[#3a1830] shrink-0 rounded-sm flex items-center justify-center">
+                        <span style={pf('3px', '#5a2848')}>empty</span>
+                      </div>
+                    )}
+                    {activeTrait && (
+                      <span className="flex-1 truncate text-[6px]" style={{ color: '#7a3860', fontFamily: "'Press Start 2P', monospace" }}>
+                        {activeTrait.display_name || activeTrait.name}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+              {layers.length === 0 && (
+                <div className="p-2 text-center">
+                  <div style={pf('4px', '#5a2848')}>NO LAYERS</div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ── Center-Right: Live Preview ── */}
+          <div className="flex-1 bg-[#1a0a14] flex flex-col min-w-0">
+            <div className="p-1 border-b border-[#3a1830] flex items-center justify-between shrink-0 bg-[#2a1020]/95">
+              <div style={pf('7px', '#e8758a')}>PREVIEW</div>
+              <div className="flex items-center gap-2">
+                <span style={pf('5px', '#5a2848')}>512×512</span>
+                <button onClick={generatePreview} className="text-[7px] text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-2 py-0.5 cursor-pointer font-bold">🎲 RANDOM</button>
+              </div>
+            </div>
+            <LivePreview layers={layers} collectionId={collectionId} previewUrl={previewUrl} canvasRef={canvasRef} />
+          </div>
+
+        </div>
+
+        {/* ── COL 4: Controls (D-Pad + Resize + Properties) ── */}
+        <div className="w-[140px] border-l-2 border-[#5a2848] bg-[#2a1020]/95 flex flex-col shrink-0 overflow-y-auto">
+          {selectedTrait ? (
             <>
-              <div className="p-3 border-b-2 border-[#3a1830] flex items-center justify-between shrink-0">
-                <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedLayer.name} ({selectedLayer.traits.length})</div>
-                <div className="flex gap-2 items-center">
-                  {uploading && <span className="text-xs text-[#ff8fa3] animate-pulse" style={{ fontFamily: "'Press Start 2P', monospace" }}>SENDING...</span>}
-                  <button
-                    onClick={handlePickFiles}
-                    style={{
-                      background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
-                      color: '#fff',
-                      border: '3px solid #ffb3c6',
-                      borderRadius: '10px',
-                      padding: '8px 20px',
-                      fontSize: '12px', fontWeight: 'bold',
-                      cursor: 'pointer',
-                      fontFamily: "'Press Start 2P', monospace",
-                      boxShadow: '0 4px 15px rgba(201,64,104,0.6)',
-                      letterSpacing: '1px',
-                    }}
-                  >
-                    📤 UPLOAD PNG
+              {/* Trait info */}
+              <div className="p-1 border-b border-[#3a1830]">
+                <div style={pf('4px', '#e8758a')} className="truncate">✎ {selectedTrait.display_name || selectedTrait.name}</div>
+              </div>
+
+              {/* Move Step Selector */}
+              <div className="p-1 border-b border-[#3a1830]">
+                <div className="text-center mb-1" style={pf('3px', '#5a2848')}>STEP</div>
+                <div className="flex justify-center gap-0.5">
+                  {[1, 5, 10, 25].map(s => (
+                    <button key={s} onClick={() => setMoveStep(s)}
+                      className="text-[5px] font-bold cursor-pointer rounded transition-all"
+                      style={{
+                        ...pf('5px', '#fff'),
+                        width: '24px', height: '16px',
+                        background: moveStep === s ? '#c94068' : '#3a1830',
+                        border: `1px solid ${moveStep === s ? '#ff8fa3' : '#5a2848'}`,
+                      }}>{s}</button>
+                  ))}
+                </div>
+              </div>
+
+              {/* D-Pad: Move */}
+              <div className="p-1 border-b border-[#3a1830]">
+                <div className="text-center mb-1" style={pf('3px', '#5a2848')}>MOVE</div>
+                <div className="flex justify-center">
+                  <div style={{ display: 'inline-grid', gridTemplateColumns: '26px 26px 26px', gridTemplateRows: '26px 26px 26px', gap: '2px' }}>
+                    <div />
+                    <button onPointerDown={() => moveTraitPosition(0, -moveStep)} title={`Up ${moveStep}px`}
+                      className="text-[10px] font-bold cursor-pointer rounded-t transition-all hover:brightness-125 active:scale-95"
+                      style={{ background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>▲</button>
+                    <div />
+                    <button onPointerDown={() => moveTraitPosition(-moveStep, 0)} title={`Left ${moveStep}px`}
+                      className="text-[10px] font-bold cursor-pointer rounded-l transition-all hover:brightness-125 active:scale-95"
+                      style={{ background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>◀</button>
+                    <div className="rounded" style={{ background: '#1a0a14', border: '1px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={pf('5px', '#ff8fa3')}>{moveStep}</span>
+                    </div>
+                    <button onPointerDown={() => moveTraitPosition(moveStep, 0)} title={`Right ${moveStep}px`}
+                      className="text-[10px] font-bold cursor-pointer rounded-r transition-all hover:brightness-125 active:scale-95"
+                      style={{ background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>▶</button>
+                    <div />
+                    <button onPointerDown={() => moveTraitPosition(0, moveStep)} title={`Down ${moveStep}px`}
+                      className="text-[10px] font-bold cursor-pointer rounded-b transition-all hover:brightness-125 active:scale-95"
+                      style={{ background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>▼</button>
+                    <div />
+                  </div>
+                </div>
+              </div>
+
+              {/* Resize Controls */}
+              <div className="p-1 border-b border-[#3a1830]">
+                <div className="text-center mb-1" style={pf('3px', '#5a2848')}>RESIZE</div>
+                <div className="flex justify-center gap-1">
+                  <button onPointerDown={() => resizeTrait(-0.1)}
+                    className="cursor-pointer rounded transition-all hover:brightness-125 active:scale-95"
+                    style={{ width: '28px', height: '22px', background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+                  <div style={{ background: '#1a0a14', border: '1px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px', borderRadius: '4px' }}>
+                    <span style={pf('5px', '#ff8fa3')}>{(selectedTrait.scale || 1).toFixed(1)}</span>
+                  </div>
+                  <button onPointerDown={() => resizeTrait(0.1)}
+                    className="cursor-pointer rounded transition-all hover:brightness-125 active:scale-95"
+                    style={{ width: '28px', height: '22px', background: '#c94068', border: '1px solid #ff8fa3', color: '#fff', fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                </div>
+              </div>
+
+              {/* Properties */}
+              <div className="p-1 border-b border-[#3a1830] space-y-1">
+                <div style={pf('3px', '#5a2848')}>PROPERTIES</div>
+                {/* X */}
+                <div className="flex items-center justify-between">
+                  <label style={pf('4px', '#7a3860')}>X</label>
+                  <div className="flex items-center gap-0.5">
+                    <button onPointerDown={() => moveTraitPosition(-1, 0)} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                    <span style={pf('5px', '#ff8fa3')} className="w-5 text-center">{selectedTrait.x || 0}</span>
+                    <button onPointerDown={() => moveTraitPosition(1, 0)} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                  </div>
+                </div>
+                {/* Y */}
+                <div className="flex items-center justify-between">
+                  <label style={pf('4px', '#7a3860')}>Y</label>
+                  <div className="flex items-center gap-0.5">
+                    <button onPointerDown={() => moveTraitPosition(0, -1)} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                    <span style={pf('5px', '#ff8fa3')} className="w-5 text-center">{selectedTrait.y || 0}</span>
+                    <button onPointerDown={() => moveTraitPosition(0, 1)} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                  </div>
+                </div>
+                {/* Opacity */}
+                <div className="flex items-center justify-between">
+                  <label style={pf('4px', '#7a3860')}>OPAC</label>
+                  <div className="flex items-center gap-0.5">
+                    <button onPointerDown={() => updateTrait(selectedTrait.id, { opacity: Math.max(0, (selectedTrait.opacity || 1) - 0.1) })} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                    <span style={pf('5px', '#ff8fa3')} className="w-5 text-center">{(selectedTrait.opacity || 1).toFixed(1)}</span>
+                    <button onPointerDown={() => updateTrait(selectedTrait.id, { opacity: Math.min(1, (selectedTrait.opacity || 1) + 0.1) })} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                  </div>
+                </div>
+                {/* Weight */}
+                <div className="flex items-center justify-between">
+                  <label style={pf('4px', '#7a3860')}>WEIGHT</label>
+                  <div className="flex items-center gap-0.5">
+                    <button onPointerDown={() => updateTrait(selectedTrait.id, { rarity_weight: Math.max(1, (selectedTrait.rarity_weight || 1) - 1) })} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>-</button>
+                    <span style={pf('5px', '#ff8fa3')} className="w-5 text-center">{selectedTrait.rarity_weight || 1}</span>
+                    <button onPointerDown={() => updateTrait(selectedTrait.id, { rarity_weight: (selectedTrait.rarity_weight || 1) + 1 })} style={{ width: '12px', height: '12px', background: '#3a1830', border: '1px solid #c94068', color: '#ff8fa3', borderRadius: '2px', fontSize: '7px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                  </div>
+                </div>
+                {/* Optional */}
+                <div className="flex items-center justify-between">
+                  <label style={pf('4px', '#7a3860')}>OPTION</label>
+                  <button onClick={() => updateTrait(selectedTrait.id, { optional: !selectedTrait.optional })}
+                    className="relative rounded-full cursor-pointer transition-all"
+                    style={{ width: '24px', height: '12px', background: selectedTrait.optional ? '#c94068' : '#3a1830', border: `1px solid ${selectedTrait.optional ? '#ff8fa3' : '#5a2848'}` }}>
+                    <div className="rounded-full bg-white absolute top-[1px] transition-all"
+                      style={{ width: '8px', height: '8px', left: selectedTrait.optional ? '14px' : '1px' }} />
                   </button>
                 </div>
               </div>
 
-              {/* Trait Settings Panel */}
-              {selectedTrait && (
-                <div className="p-3 border-b-2 border-[#3a1830] bg-[#2a1020] shrink-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>EDIT: {selectedTrait.display_name || selectedTrait.name}</div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1 bg-[#1a0a14] border-2 border-[#c94068] px-3 py-1 rounded">
-                        <span className="text-xs text-[#ff8fa3]" style={{ fontFamily: "'Press Start 2P', monospace" }}>X:</span>
-                        <span className="text-xs text-[#fff] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedTrait.x || 0}</span>
-                      </div>
-                      <div className="flex items-center gap-1 bg-[#1a0a14] border-2 border-[#c94068] px-3 py-1 rounded">
-                        <span className="text-xs text-[#ff8fa3]" style={{ fontFamily: "'Press Start 2P', monospace" }}>Y:</span>
-                        <span className="text-xs text-[#fff] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>{selectedTrait.y || 0}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 mb-2">
-                    <div>
-                      <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>NAME</label>
-                      <input type="text" value={selectedTrait.display_name || ''} onChange={(e) => updateTrait(selectedTrait.id, { display_name: e.target.value })} className="w-full pixel-input text-xs" />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>CATEGORY</label>
-                      <input type="text" value={selectedTrait.category_name || ''} onChange={(e) => updateTrait(selectedTrait.id, { category_name: e.target.value })} className="w-full pixel-input text-xs" />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>WEIGHT</label>
-                      <input type="number" min="1" value={selectedTrait.rarity_weight} onChange={(e) => updateTrait(selectedTrait.id, { rarity_weight: parseInt(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 mb-2">
-                    <div>
-                      <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>SCALE</label>
-                      <input type="number" step="0.1" min="0.1" max="5" value={selectedTrait.scale} onChange={(e) => updateTrait(selectedTrait.id, { scale: parseFloat(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
-                    </div>
-                    <div>
-                      <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>OPACITY</label>
-                      <input type="number" step="0.1" min="0" max="1" value={selectedTrait.opacity} onChange={(e) => updateTrait(selectedTrait.id, { opacity: parseFloat(e.target.value) || 1 })} className="w-full pixel-input text-xs" />
-                    </div>
-                    <div className="flex items-end gap-2 pb-1">
-                      <input type="checkbox" checked={selectedTrait.optional} onChange={(e) => updateTrait(selectedTrait.id, { optional: e.target.checked })} className="accent-[#c94068] w-4 h-4" />
-                      <label className="text-xs text-[#7a3860]" style={{ fontFamily: "'Press Start 2P', monospace" }}>OPT</label>
-                      <button onClick={() => deleteTrait(selectedTrait.id)} style={{ background: '#3a0820', color: '#ff4060', border: '2px solid #ff4060', borderRadius: '6px', padding: '4px 10px', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer', fontFamily: "'Press Start 2P', monospace", marginLeft: 'auto' }}>DEL</button>
-                    </div>
-                  </div>
-
-                  {/* ── D-Pad Controls ── */}
-                  <div className="flex items-start gap-4 mt-2">
-                    {/* X/Y number inputs */}
-                    <div className="flex gap-2 items-end">
-                      <div>
-                        <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>X</label>
-                        <input type="number" value={selectedTrait.x} onChange={(e) => updateTrait(selectedTrait.id, { x: parseInt(e.target.value) || 0 })} className="w-16 pixel-input text-xs" />
-                      </div>
-                      <div>
-                        <label className="block text-xs text-[#5a2848] mb-0.5" style={{ fontFamily: "'Press Start 2P', monospace" }}>Y</label>
-                        <input type="number" value={selectedTrait.y} onChange={(e) => updateTrait(selectedTrait.id, { y: parseInt(e.target.value) || 0 })} className="w-16 pixel-input text-xs" />
-                      </div>
-                    </div>
-
-                    {/* BIG D-Pad — 10px */}
-                    <div style={{ display: 'inline-grid', gridTemplateColumns: '48px 48px 48px', gridTemplateRows: '48px 48px 48px', gap: '3px' }}>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(0, -10)} title="Up 10px"
-                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px 10px 0 0', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▲</button>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(-10, 0)} title="Left 10px"
-                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px 0 0 10px', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>◀</button>
-                      <div style={{ background: '#1a0a14', border: '3px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="text-xs text-[#ff8fa3] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>10</span>
-                      </div>
-                      <button onPointerDown={() => moveTraitPosition(10, 0)} title="Right 10px"
-                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 10px 10px 0', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▶</button>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(0, 10)} title="Down 10px"
-                        style={{ background: '#c94068', border: '3px solid #ff8fa3', color: '#fff', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 10px 10px', boxShadow: '0 2px 8px rgba(201,64,104,0.6)' }}>▼</button>
-                      <div />
-                    </div>
-
-                    {/* SMALL D-Pad — 1px fine */}
-                    <div style={{ display: 'inline-grid', gridTemplateColumns: '38px 38px 38px', gridTemplateRows: '38px 38px 38px', gap: '2px' }}>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(0, -1)} title="Up 1px"
-                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '6px 6px 0 0' }}>▴</button>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(-1, 0)} title="Left 1px"
-                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '6px 0 0 6px' }}>◂</button>
-                      <div style={{ background: '#1a0a14', border: '2px solid #c94068', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="text-xs text-[#ff8fa3] font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>1</span>
-                      </div>
-                      <button onPointerDown={() => moveTraitPosition(1, 0)} title="Right 1px"
-                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 6px 6px 0' }}>▸</button>
-                      <div />
-                      <button onPointerDown={() => moveTraitPosition(0, 1)} title="Down 1px"
-                        style={{ background: '#3a1830', border: '2px solid #c94068', color: '#ff8fa3', fontSize: '14px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0 0 6px 6px' }}>▾</button>
-                      <div />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Traits Grid / Drop Zone */}
-              <div className={`flex-1 overflow-y-auto p-3 drop-zone ${dragOver ? 'drag-over' : ''}`}
-                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={(e) => { e.preventDefault(); setDragOver(false); }}
-                onDrop={handleDrop}>
-                {dragOver && (
-                  <div className="border-2 border-dashed border-[#ff8fa3] p-8 text-center mb-3 bg-[#c94068]/10">
-                    <div className="text-3xl mb-2">🌸</div>
-                    <div className="text-xs text-[#ff8fa3]" style={{ fontFamily: "'Press Start 2P', monospace" }}>DROP PNG HERE</div>
-                  </div>
-                )}
-                <div className="grid grid-cols-5 gap-3">
-                  {selectedLayer.traits.map((trait) => (
-                    <div key={trait.id}
-                      className={`relative bg-[#2a1020] pixel-border p-2 cursor-pointer transition-all ${selectedTraitId === trait.id ? 'sakura-glow border-[#ff8fa3]!' : ''}`}
-                      onClick={() => setSelectedTraitId(trait.id)}>
-                      <div className="aspect-square bg-[#1a0a14] mb-2 flex items-center justify-center overflow-hidden border border-[#3a1830]">
-                        <img src={`/api/collections/${collectionId}/traits/${trait.filename}`} alt={trait.name}
-                          className="max-w-full max-h-full object-contain" style={{ imageRendering: 'pixelated' }} loading="lazy" />
-                      </div>
-                      <p className="text-xs text-[#e8758a] truncate" style={{ fontFamily: "'Press Start 2P', monospace" }}>{trait.display_name || trait.name}</p>
-                      <p className="text-xs text-[#5a2848]">w:{trait.rarity_weight}</p>
-                      {trait.optional && <span className="absolute top-1 right-1 text-xs bg-[#5a2848] text-[#ffb3c6] px-1">OPT</span>}
-                    </div>
-                  ))}
-                </div>
-                {selectedLayer.traits.length === 0 && !dragOver && (
-                  <div className="text-center py-16">
-                    <div className="text-4xl mb-4">📁</div>
-                    <div className="text-xs text-[#5a2848] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-                      UPLOAD PNG OR DRAG HERE
-                    </div>
-                    <button onClick={handlePickFiles}
-                      style={{
-                        background: 'linear-gradient(135deg, #c94068, #ff8fa3)',
-                        color: '#fff',
-                        border: '3px solid #ffb3c6',
-                        borderRadius: '12px',
-                        padding: '12px 28px',
-                        fontSize: '13px', fontWeight: 'bold',
-                        cursor: 'pointer',
-                        fontFamily: "'Press Start 2P', monospace",
-                        boxShadow: '0 4px 15px rgba(201,64,104,0.6)',
-                      }}
-                    >📤 UPLOAD</button>
-                  </div>
-                )}
+              {/* Delete */}
+              <div className="p-1">
+                <button onClick={() => deleteTrait(selectedTrait.id)}
+                  className="w-full text-[#ff4060] bg-[#3a0820] border border-[#ff4060] rounded px-1 py-0.5 cursor-pointer hover:bg-[#ff4060] hover:text-[#fff] transition-all"
+                  style={pf('4px', '#ff4060')}>🗑 DEL</button>
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex items-center justify-center p-2">
               <div className="text-center">
-                <div className="text-5xl mb-4 floating-branch inline-block">🌸</div>
-                <div className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>SELECT A LAYER</div>
+                <div className="text-xl mb-1 opacity-50">🎯</div>
+                <div style={pf('4px', '#5a2848')}>SELECT TRAIT</div>
               </div>
             </div>
           )}
-        </div>
-
-        {/* ── Right: Preview ── */}
-        <div className="w-64 border-l-4 border-[#5a2848] bg-[#2a1020]/95 backdrop-blur-sm flex flex-col shrink-0">
-          <div className="p-3 border-b-2 border-[#3a1830]">
-            <div className="text-xs text-[#e8758a]" style={{ fontFamily: "'Press Start 2P', monospace" }}>PREVIEW 512x512</div>
-          </div>
-          <div className="flex-1 flex items-center justify-center p-3">
-            {previewUrl ? (
-              <div className="pixel-border-light p-1 bg-[#1a0a14]">
-                <img src={previewUrl} alt="Preview" className="w-full" style={{ imageRendering: 'pixelated' }} />
-              </div>
-            ) : (
-              <div className="text-center">
-                <div className="text-4xl mb-3">🎲</div>
-                <div className="text-xs text-[#5a2848]" style={{ fontFamily: "'Press Start 2P', monospace" }}>CLICK RANDOM</div>
-              </div>
-            )}
-          </div>
-          <div className="p-3 border-t-2 border-[#3a1830]">
-            <button onClick={generatePreview} className="w-full pixel-btn pixel-btn-accent">🎲 RANDOM</button>
-          </div>
         </div>
       </div>
 
       {/* ── Modals ── */}
       {showSettings && (
-        <div className="fixed inset-0 modal-overlay flex items-center justify-center z-50">
-          <div className="bg-[#2a1020] pixel-border p-6 w-full max-w-lg sakura-glow max-h-[80vh] overflow-y-auto">
-            <div className="text-base text-[#ffb3c6] mb-5" style={{ fontFamily: "'Press Start 2P', monospace" }}>SETTINGS</div>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-[#2a1020] border-2 border-[#5a2848] rounded p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto" style={{ boxShadow: '0 0 40px rgba(201,64,104,0.3)' }}>
+            <div className="mb-5" style={pf('12px', '#ffb3c6')}>SETTINGS</div>
             <div className="space-y-3">
-              <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>NAME</label><input type="text" value={collection.name} onChange={(e) => updateCollection({ name: e.target.value })} className="w-full pixel-input" /></div>
-              <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>DESCRIPTION</label><textarea value={collection.description || ''} onChange={(e) => updateCollection({ description: e.target.value })} className="w-full pixel-input h-20 resize-none" /></div>
-              <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>EXTERNAL URL</label><input type="text" value={collection.external_url || ''} onChange={(e) => updateCollection({ external_url: e.target.value })} className="w-full pixel-input" /></div>
-              <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>IMAGE BASE URL</label><input type="text" value={collection.image_base_url || ''} onChange={(e) => updateCollection({ image_base_url: e.target.value })} className="w-full pixel-input" placeholder="https://example.com/media" /></div>
+              <div><label className="block mb-1" style={pf('8px', '#e8758a')}>NAME</label><input type="text" value={collection.name} onChange={(e) => updateCollection({ name: e.target.value })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068]" style={pf('9px', '#ffb3c6')} /></div>
+              <div><label className="block mb-1" style={pf('8px', '#e8758a')}>DESCRIPTION</label><textarea value={collection.description || ''} onChange={(e) => updateCollection({ description: e.target.value })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068] h-20 resize-none" style={pf('8px', '#ffb3c6')} /></div>
+              <div><label className="block mb-1" style={pf('8px', '#e8758a')}>EXTERNAL URL</label><input type="text" value={collection.external_url || ''} onChange={(e) => updateCollection({ external_url: e.target.value })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068]" style={pf('9px', '#ffb3c6')} /></div>
+              <div><label className="block mb-1" style={pf('8px', '#e8758a')}>IMAGE BASE URL</label><input type="text" value={collection.image_base_url || ''} onChange={(e) => updateCollection({ image_base_url: e.target.value })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068]" style={pf('9px', '#ffb3c6')} placeholder="https://example.com/media" /></div>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>WALLET</label><input type="text" value={collection.royalty_wallet || ''} onChange={(e) => updateCollection({ royalty_wallet: e.target.value })} className="w-full pixel-input" /></div>
-                <div><label className="block text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>FEE (bps)</label><input type="number" value={collection.royalty_fee_basis_points || 0} onChange={(e) => updateCollection({ royalty_fee_basis_points: parseInt(e.target.value) || 0 })} className="w-full pixel-input" /></div>
+                <div><label className="block mb-1" style={pf('8px', '#e8758a')}>WALLET</label><input type="text" value={collection.royalty_wallet || ''} onChange={(e) => updateCollection({ royalty_wallet: e.target.value })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068]" style={pf('9px', '#ffb3c6')} /></div>
+                <div><label className="block mb-1" style={pf('8px', '#e8758a')}>FEE (bps)</label><input type="number" value={collection.royalty_fee_basis_points || 0} onChange={(e) => updateCollection({ royalty_fee_basis_points: parseInt(e.target.value) || 0 })} className="w-full bg-[#1a0a14] border border-[#3a1830] text-[#ffb3c6] rounded px-3 py-2 outline-none focus:border-[#c94068]" style={pf('9px', '#ffb3c6')} /></div>
               </div>
             </div>
-            <div className="flex justify-end mt-5"><button onClick={() => setShowSettings(false)} className="pixel-btn pixel-btn-accent">DONE</button></div>
+            <div className="flex justify-end mt-5">
+              <button onClick={() => setShowSettings(false)} className="text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-4 py-2 cursor-pointer font-bold" style={pf('9px', '#fff')}>DONE</button>
+            </div>
           </div>
         </div>
       )}
 
       {showGenerate && (
-        <div className="fixed inset-0 modal-overlay flex items-center justify-center z-50">
-          <div className="bg-[#2a1020] pixel-border p-6 w-full max-w-md sakura-glow">
-            <div className="text-base text-[#ffb3c6] mb-5" style={{ fontFamily: "'Press Start 2P', monospace" }}>⚡ GENERATE</div>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-[#2a1020] border-2 border-[#5a2848] rounded p-6 w-full max-w-md" style={{ boxShadow: '0 0 40px rgba(201,64,104,0.3)' }}>
+            <div className="mb-5" style={pf('12px', '#ffb3c6')}>⚡ GENERATE</div>
             {generating ? (
               <div className="text-center py-8">
-                <div className="text-4xl mb-4 animate-spin-slow inline-block">⚙</div>
-                <div className="text-xs text-[#e8758a] mt-3" style={{ fontFamily: "'Press Start 2P', monospace" }}>GENERATING...</div>
+                <div className="text-4xl mb-4 animate-spin inline-block">⚙</div>
+                <div className="mt-3" style={pf('9px', '#e8758a')}>GENERATING...</div>
               </div>
             ) : (
               <>
-                <div className="text-xs text-[#7a3860] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>SELECT SUPPLY</div>
+                <div className="mb-4" style={pf('8px', '#7a3860')}>SELECT SUPPLY</div>
                 <div className="grid grid-cols-2 gap-3">
                   {[10, 100, 1000, 10000].map((supply) => (
-                    <button key={supply} onClick={() => batchGenerate(supply)} className="pixel-btn pixel-btn-accent py-6 text-center">
-                      <div className="text-lg">{supply.toLocaleString()}</div>
-                      <div className="text-xs text-[#e8758a] mt-1">NFTs</div>
+                    <button key={supply} onClick={() => batchGenerate(supply)}
+                      className="text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded py-6 text-center cursor-pointer hover:brightness-110 transition-all">
+                      <div className="text-xl font-bold">{supply.toLocaleString()}</div>
+                      <div style={pf('7px', '#e8758a')} className="mt-1">NFTs</div>
                     </button>
                   ))}
                 </div>
-                <div className="flex justify-end mt-4"><button onClick={() => setShowGenerate(false)} className="pixel-btn text-xs">CANCEL</button></div>
+                <div className="flex justify-end mt-4">
+                  <button onClick={() => setShowGenerate(false)} className="text-[#ffb3c6] bg-[#3a1830] border border-[#5a2848] rounded px-3 py-1 cursor-pointer hover:bg-[#5a2848] transition-all" style={pf('8px', '#ffb3c6')}>CANCEL</button>
+                </div>
               </>
             )}
           </div>
@@ -727,26 +692,28 @@ export default function Editor() {
       )}
 
       {validation && (
-        <div className="fixed inset-0 modal-overlay flex items-center justify-center z-50">
-          <div className="bg-[#2a1020] pixel-border p-6 w-full max-w-lg sakura-glow max-h-[80vh] overflow-y-auto">
-            <div className="text-base text-[#ffb3c6] mb-4" style={{ fontFamily: "'Press Start 2P', monospace" }}>✓ VALIDATION</div>
-            <div className={`text-sm mb-3 ${validation.valid ? 'text-[#88ffaa]' : 'text-[#ff4060]'}`} style={{ fontFamily: "'Press Start 2P', monospace" }}>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-[#2a1020] border-2 border-[#5a2848] rounded p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto" style={{ boxShadow: '0 0 40px rgba(201,64,104,0.3)' }}>
+            <div className="mb-4" style={pf('12px', '#ffb3c6')}>✓ VALIDATION</div>
+            <div className="mb-3" style={pf('10px', validation.valid ? '#88ffaa' : '#ff4060')}>
               {validation.valid ? 'ALL PASSED!' : 'ISSUES FOUND'}
             </div>
-            {validation.stats && <div className="text-xs text-[#5a2848] mb-3" style={{ fontFamily: "'Press Start 2P', monospace" }}>TOKENS:{validation.stats.totalTokens} IMAGES:{validation.stats.totalImages}</div>}
+            {validation.stats && <div className="mb-3" style={pf('7px', '#5a2848')}>TOKENS:{validation.stats.totalTokens} IMAGES:{validation.stats.totalImages}</div>}
             {validation.errors.length > 0 && (
               <div className="mb-3">
-                <div className="text-xs text-[#ff4060] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>ERRORS</div>
-                {validation.errors.map((err, i) => <div key={i} className="text-xs text-[#ff8090] bg-[#3a0820] border border-[#5a1030] px-2 py-1 mb-1">{err}</div>)}
+                <div className="mb-1" style={pf('8px', '#ff4060')}>ERRORS</div>
+                {validation.errors.map((err, i) => <div key={i} className="text-xs text-[#ff8090] bg-[#3a0820] border border-[#5a1030] px-2 py-1 mb-1 rounded">{err}</div>)}
               </div>
             )}
             {validation.warnings.length > 0 && (
               <div className="mb-3">
-                <div className="text-xs text-[#e8758a] mb-1" style={{ fontFamily: "'Press Start 2P', monospace" }}>WARNINGS</div>
-                {validation.warnings.map((warn, i) => <div key={i} className="text-xs text-[#e8758a] bg-[#3a1830] border border-[#5a2848] px-2 py-1 mb-1">{warn}</div>)}
+                <div className="mb-1" style={pf('8px', '#e8758a')}>WARNINGS</div>
+                {validation.warnings.map((warn, i) => <div key={i} className="text-xs text-[#e8758a] bg-[#3a1830] border border-[#5a2848] px-2 py-1 mb-1 rounded">{warn}</div>)}
               </div>
             )}
-            <div className="flex justify-end mt-4"><button onClick={() => setValidation(null)} className="pixel-btn pixel-btn-accent">CLOSE</button></div>
+            <div className="flex justify-end mt-4">
+              <button onClick={() => setValidation(null)} className="text-[#fff] bg-gradient-to-r from-[#c94068] to-[#ff8fa3] border border-[#ffb3c6] rounded px-4 py-2 cursor-pointer font-bold" style={pf('9px', '#fff')}>CLOSE</button>
+            </div>
           </div>
         </div>
       )}
